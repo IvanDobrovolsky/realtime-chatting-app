@@ -4,7 +4,8 @@
   "description": "This application is a simple web-chat room to demonstrate how Node.js makes developing realtime applications easy and neat.",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon app.js"
   },
   "repository": {
     "type": "git",
@@ -19,5 +20,10 @@
   "bugs": {
     "url": "https://github.com/IvanDobrovolsky/realtime-chatting-app/issues"
   },
-  "homepage": "https://github.com/IvanDobrovolsky/realtime-chatting-app#readme"
+  "homepage": "https://github.com/IvanDobrovolsky/realtime-chatting-app#readme",
+  "devDependencies": {},
+  "dependencies": {
+    "express": "4.13.4",
+    "less-middleware": "2.1.0"
+  }
 }
