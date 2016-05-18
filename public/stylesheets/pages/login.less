@@ -1,0 +1,67 @@
+@import './../palette';
+@import './../styleguide';
+
+.page-login{
+
+
+  &--section{
+    width: 500px;
+    margin: 200px auto 0;
+    padding: 30px;
+    display: flex;
+    justify-content: space-around;
+    background-color: @background-tertiary;
+
+    &-avatar{
+      position: relative;
+
+      &::after{
+        content: 'Your avatar will be uploaded by gravatar service';
+        opacity: 0;
+        color: @background-primary;
+        position: absolute;
+        display: block;
+        font-size: 12px;
+        text-align: center;
+        transition: 0.3s ease-in;
+      }
+
+
+      &:hover{
+        &::after{
+          opacity: 1;
+        }
+      }
+    }
+
+    &-form{
+      text-align: left;
+
+
+      &-title{
+        color: @text-primary;
+      }
+
+      form{
+        display: flex;
+        flex-direction: column;
+      }
+
+      input:not(:last-child){
+        background-color: @background-secondary;
+        border: 0.5px solid @text-primary;
+        padding: 7px;
+        border-radius: 5px;
+        margin: 7px 0;
+      }
+
+      &-submit{
+        .styleguide-cta;
+        width: 120px;
+        margin-top: 20px;
+        border: none;
+        cursor: pointer;
+      }
+    }
+  }
+}

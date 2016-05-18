@@ -1,0 +1,16 @@
+html
+    head
+        title Login
+        link(rel="stylesheet", href="stylesheets/main.css")
+        link(href="http://fonts.googleapis.com/css?family=Open+Sans Condensed:300italic,300,700", rel="stylesheet", type="text/css")
+    body
+        div.page-login
+            div.page-login--section
+                div.page-login--section-avatar
+                    img(src="#{avatar}")
+                div.page-login--section-form
+                    h2.page-login--section-form-title Who are you?
+                    form(action="/submit" method="post")
+                        input.page-login--section-form-nickname(type="text",   name="nickname" placeholder="Your nick name",     required=)
+                        input.page-login--section-form-email(   type="email",  name="email"    placeholder="Your email address", required=  )
+                        input.page-login--section-form-submit(  type="submit", value="Enter")

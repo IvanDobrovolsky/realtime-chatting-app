@@ -1,4 +1,5 @@
 const lessMiddleware = require('less-middleware');
+const parserMiddleware = require('body-parser');
 
 const publicDirectory = __dirname + '/public';
 
@@ -14,6 +15,9 @@ module.exports = {
 
         //Configuring less middleware
         app.use(lessMiddleware(publicDirectory), []);
+
+        //Parse application/x-www-form-urlencoded
+        app.use(parserMiddleware.urlencoded({ extended: false }));
 
         //Setting public directory for the client
         app.use(express.static(publicDirectory));
