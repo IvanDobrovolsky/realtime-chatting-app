@@ -22,6 +22,12 @@ app.post('/submit', (request, response) => {
 
 });
 
+//Handling 404 request
+app.get('*', (request, response) => {
+   response.status(404);
+   response.render('404', {title: "The page you requested cannot be found!"});
+});
+
 console.log(`The app is running on port ${config.port}`);
 app.listen(config.port);
 
