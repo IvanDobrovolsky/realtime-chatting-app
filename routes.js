@@ -1,6 +1,6 @@
 const users = new Set();
 
-//TODO Make a SPA client
+
 module.exports = (app, io) => {
 
     let isLogined = false;
@@ -10,9 +10,6 @@ module.exports = (app, io) => {
         response.render('home', {title: 'Node.js + Socket.io realtime webchat'});
     });
 
-    app.get('/login', (request, response) => {
-        response.render('login', {avatar: "images/unnamed.jpg"});
-    });
 
     app.get('/invite', (request, response) => {
         //TODO Link is hardcoded for now(Add a real one!)
@@ -20,11 +17,34 @@ module.exports = (app, io) => {
     });
 
     app.get('/chat', (request, response) => {
-        if(isLogined){
-            //response.render('chat');
-        } else {
-            response.redirect('/login');
-        }
+        response.render('chat', {avatar: "images/unnamed.jpg"});
+
+        //Connection
+        io.on('connection', socket => {
+            console.log("A user connected!");
+
+            //Disconnecting
+            socket.on('disconnect', () => console.log("A user is disconnected!"));
+
+            //Login
+            socket.on('login', user => {
+                console.log("A user logged id!");
+
+                //Adding static id property to the user's object
+                Object.defineProperty(user, 'id', {
+                    enumerable: true,
+                    configurable: false,
+                    writable: false,
+                    value: user.username + Date.now()
+                });
+
+                users.add(user);
+
+                //Notifying all users (except the one who just logged in) from the chat the a new user joined
+                socket.broadcast.emit('newUser', user);
+            })
+
+        });
     });
 
     //Handling 404 request
@@ -32,27 +52,4 @@ module.exports = (app, io) => {
         response.status(404);
         response.render('404', {title: "The page you requested cannot be found!"});
     });
-
-    //Connection
-    io.on('connection', socket => {
-        console.log("A user connected!");
-
-        //Disconnecting
-        socket.on('disconnect', () => console.log("A user is disconnected!"));
-
-
-        //Login
-        socket.on('login', (data) => {
-            console.log('login', data);
-
-            const id = data.username + Date.now();
-            if(users.size >= 1){
-                socket.emit('authorized', {token: id, id});
-            } else {
-                socket.emit("noUsersInChat", {});
-            }
-        })
-
-    });
-
 };

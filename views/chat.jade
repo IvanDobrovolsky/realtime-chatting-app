@@ -1,0 +1,10 @@
+html
+    head
+        title Chat
+        link(rel="stylesheet", href="stylesheets/main.css")
+        link(href="http://fonts.googleapis.com/css?family=Open+Sans Condensed:300italic,300,700", rel="stylesheet", type="text/css")
+    body
+       include sections/login
+       include sections/chat
+    script(src="/socket.io/socket.io.js")
+    script(src="scripts/chat.js")
