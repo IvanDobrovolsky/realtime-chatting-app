@@ -10,7 +10,10 @@ html
                     img(src="#{avatar}")
                 div.page-login--section-form
                     h2.page-login--section-form-title Who are you?
-                    form(action="/submit" method="post")
+                    form
                         input.page-login--section-form-nickname(type="text",   name="nickname" placeholder="Your nick name",     required=)
                         input.page-login--section-form-email(   type="email",  name="email"    placeholder="Your email address", required=  )
                         input.page-login--section-form-submit(  type="submit", value="Enter")
+    script(src="/socket.io/socket.io.js")
+    script(src="scripts/login.js")
+
