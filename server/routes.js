@@ -12,7 +12,7 @@ module.exports = (app, io) => {
     });
 
     app.get('/chat', (request, response) => {
-        response.render('chat', {avatar: "images/unnamed.jpg"});
+        response.render('chat', {avatar: "img/unnamed.jpg"});
     });
 
     //Handling 404 request
@@ -55,7 +55,7 @@ module.exports = (app, io) => {
                 value: user.username + Date.now()
             });
 
-            user.avatar = 'images/unnamed.jpg';
+            user.avatar = 'img/unnamed.jpg';
 
             socket.emit('youJoinedChat', {user, other: users});
 

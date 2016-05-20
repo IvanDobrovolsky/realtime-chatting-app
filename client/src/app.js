@@ -1,6 +1,8 @@
 /**
-   Client-side code!
+ Client-side code!
  */
+
+import toastr from 'toastr';
 
 //Finding needed elements on the page
 const loginSection         = document.querySelector('section.page-login');
@@ -47,12 +49,12 @@ function renderProfileSection(profile) {
 
 function renderUsersSection(users) {
     const usersTemplate = users
-                             .map( user => `<div class="page-chat--left-panel---users-user">
+        .map( user => `<div class="page-chat--left-panel---users-user">
                                                 <img src="${user.avatar}" class="page-chat--left-panel---users-user-avatar"/>
                                                 <div class="page-chat--left-panel---users-user-username">${user.username}</div>
                                             </div>
                              `)
-                             .reduce((a, b) => a + b, '');
+        .reduce((a, b) => a + b, '');
     chatLeftSectionPanel.innerHTML += `<div class="page-chat--left-panel---users">Users in chat: ${usersTemplate === '' ? 'No users!' : usersTemplate}</div>`;
 }
 
@@ -89,21 +91,21 @@ window.addEventListener('load', () => {
             you = chat.user;
             renderProfileSection(chat.user);
             renderUsersSection(chat.other);
-            alertify.success('You joined chat!');
+            toastr.success('You joined chat!');
         });
 
-
+        
         //listening to connections from new user
         socket.on('newUserJoinedChat', chat => {
             console.log(chat);
-            alertify.success(`'${chat.user.username}' just joined the chat!`);
+            toastr.success(`'${chat.user.username}' just joined the chat!`);
             renderProfileSection(you);
             renderUsersSection(getOtherUsers(you, chat.other));
         });
 
         socket.on('userLeftChat', chat => {
             console.log(chat);
-            alertify.error(`'${chat.user.username}' just left the chat!`);
+            toastr.error(`'${chat.user.username}' just left the chat!`);
             renderProfileSection(you);
             renderUsersSection(getOtherUsers(you, chat.other));
         })

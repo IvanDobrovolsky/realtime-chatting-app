@@ -1,4 +1,3 @@
-const lessMiddleware = require('less-middleware');
 const parserMiddleware = require('body-parser');
 const path = require('path');
 const publicDirectory = path.resolve(__dirname, '../client/build');
@@ -12,9 +11,6 @@ module.exports = {
 
         //Setting a directory for views
         app.set('views', path.resolve(__dirname, '../views'));
-
-        //Configuring less middleware
-        app.use(lessMiddleware(publicDirectory), []);
 
         //Parse application/x-www-form-urlencoded
         app.use(parserMiddleware.urlencoded({ extended: false }));
