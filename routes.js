@@ -1,4 +1,4 @@
-const users = new Set();
+const users = [];
 
 module.exports = (app, io) => {
 
@@ -25,37 +25,45 @@ module.exports = (app, io) => {
     //Working with websockets
     io.on('connection', socket =>{
 
-        let newUser = {};
+        let user = {};
 
 
         //TODO remove user after disconnecting
         //Disconnecting
-        socket.on('disconnect', () => console.log(`A user '${newUser.username}' was disconnected!`));
+        socket.on('disconnect', () => {
+            //Notifying that a user was disconnected
+            console.log(`A user '${user.username}' was disconnected!`);
+
+            //Removing a user object from the store
+            users.splice(users.findIndex(u => u.id === user.id), 1);
+
+            //Broadcasting an event and notifying other users about it
+            socket.broadcast.emit('userLeftChat', {user, other: users});
+        });
 
         //Login
-        socket.on('login', user => {
-            console.log(`A user '${user.username}' is connected and logged in!`);
-            newUser = user;
+        socket.on('login', newUser => {
+            console.log(`A user '${newUser.username}' is connected and logged in!`);
+
+            user = newUser;
 
             //Adding static id property to the user's object
-            Object.defineProperty(newUser, 'id', {
+            Object.defineProperty(user, 'id', {
                 enumerable: true,
                 configurable: false,
                 writable: false,
                 value: user.username + Date.now()
             });
 
-            newUser.avatar = 'images/unnamed.jpg';
+            user.avatar = 'images/unnamed.jpg';
 
-            const chat = {you: newUser, other: Array.from(users)};
+            socket.emit('youJoinedChat', {user, other: users});
 
-            //Storing the user object
-            users.add(newUser);
-
-            socket.emit('joinedChat', chat);
+            //Adding new user to the store
+            users.push(user);
 
             //Notifying all users (except the one who just logged in) from the chat the a new user joined
-            socket.broadcast.emit('newUser', newUser);
+            socket.broadcast.emit('newUserJoinedChat', {user, other: users});
         })
 
     });

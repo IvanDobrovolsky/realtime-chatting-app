@@ -23,6 +23,7 @@
   "homepage": "https://github.com/IvanDobrovolsky/realtime-chatting-app#readme",
   "devDependencies": {},
   "dependencies": {
+    "alertify": "0.3.0",
     "body-parser": "1.15.1",
     "express": "4.13.4",
     "jade": "1.11.0",

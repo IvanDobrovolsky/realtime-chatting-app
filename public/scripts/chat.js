@@ -56,6 +56,12 @@ function renderUsersSection(users) {
     chatLeftSectionPanel.innerHTML += `<div class="page-chat--left-panel---users">Users in chat: ${usersTemplate === '' ? 'No users!' : usersTemplate}</div>`;
 }
 
+//Showing only other users, not you
+function getOtherUsers(you, users){
+    let other = [...users];
+    other.splice(other.findIndex(user => user.id === you.id), 1);
+    return other;
+}
 
 //TODO add babel polyfill for latency
 
@@ -70,21 +76,36 @@ window.addEventListener('load', () => {
         //Creating a socket instance
         const socket = io();
 
+        //'Your' user object will be stored in here
+        let you = {};
+
         //Firing a login event and passing data to it
         socket.emit('login', user);
 
         //After login a chat section is rendered
         show(chatSection);
 
-        socket.on('joinedChat', chat => {
-            renderProfileSection(chat.you);
-            renderUsersSection(chat.other)
+        socket.on('youJoinedChat', chat => {
+            you = chat.user;
+            renderProfileSection(chat.user);
+            renderUsersSection(chat.other);
+            alertify.success('You joined chat!');
         });
 
 
         //listening to connections from new user
-        socket.on('newUser', (newUser) => {
-            console.log('New user just joined!', newUser);
+        socket.on('newUserJoinedChat', chat => {
+            console.log(chat);
+            alertify.success(`'${chat.user.username}' just joined the chat!`);
+            renderProfileSection(you);
+            renderUsersSection(getOtherUsers(you, chat.other));
+        });
+
+        socket.on('userLeftChat', chat => {
+            console.log(chat);
+            alertify.error(`'${chat.user.username}' just left the chat!`);
+            renderProfileSection(you);
+            renderUsersSection(getOtherUsers(you, chat.other));
         })
     });
 });
