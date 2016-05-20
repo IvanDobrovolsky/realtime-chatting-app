@@ -1,4 +1,10 @@
-section.page-chat
+section.page-chat-section
     h1.page-chat--title Welcome to the chat!
-    aside.page-chat--left-panel
-        div.page-chat--left-panel---users Users in chat:
+    div.page-chat
+        aside.page-chat--left-panel
+            div.page-chat--left-panel---users Users in chat:
+        aside.page-chat--messages
+    div.page-chat--send-form
+        form
+            input.page-chat--send-form-text(  type="text",   name="text" placeholder="Your nick name", required)
+            input.page-chat--send-form-submit(type="submit", value="Send")

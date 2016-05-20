@@ -22,7 +22,7 @@ gulp.task('css', () => {
     gulp.src(config.paths.stylesheets)
         .pipe(sourcemaps.init())
         .pipe(less())
-        //.pipe(autoprefixer())
+        .pipe(autoprefixer())
         .pipe(concat('bundle.css'))
         .pipe(sourcemaps.write())
         .pipe(gulp.dest(config.paths.dist + '/css'))
@@ -89,7 +89,7 @@ gulp.task('nodemon', ['css', 'img', 'js'], (cb) => {
 
 //Gulp watch task - watches for changes and updates specified files in the project
 gulp.task('watch', ['nodemon'], () => {
-    gulp.watch(config.paths.stylesheets, ['css']);
+    gulp.watch(config.watch.stylesheets, ['css']);
     gulp.watch(config.paths.images, ['img']);
 });
 

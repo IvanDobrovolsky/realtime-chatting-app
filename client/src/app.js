@@ -1,16 +1,19 @@
-
-import toastr from 'toastr';
-import utils from './utils';
+import toastr           from 'toastr';
+import utils            from './utils';
 import templateRenderer from './renderers/template-renderer';
+import messageRenderer  from './renderers/message-renderer';
+
 
 //Finding needed elements on the page
 const loginSection         = document.querySelector('section.page-login');
 const loginForm            = loginSection.querySelector('.page-login--section-form form');
-const chatSection          = document.querySelector('section.page-chat');
+const chatSection          = document.querySelector('section.page-chat-section');
 const chatLeftSectionPanel = chatSection.querySelector('aside.page-chat--left-panel');
+const chatMessagesSection  = chatSection.querySelector('.page-chat--messages');
 const sections             = Array.from(document.querySelectorAll('section'));
+const chatSendMessageForm  = chatSection.querySelector('.page-chat--send-form');
 
-
+//When content is loaded execute the script
 window.addEventListener('load', () => {
 
     //First a login section is rendered
@@ -52,6 +55,32 @@ window.addEventListener('load', () => {
             toastr.error(`'${chat.user.username}' just left the chat!`);
             templateRenderer.renderProfileSection(chatLeftSectionPanel, you);
             templateRenderer.renderUsersSection(chatLeftSectionPanel, utils.getOtherUsers(you, chat.other));
+        });
+
+        //Sending an message
+        chatSendMessageForm.addEventListener('submit', event => {
+
+            //Preventing a page from reload after submit
+            event.preventDefault();
+
+            console.log("Sending a message!");
+            let text = event.target[0].value;
+
+            //Clearing the form
+            event.target[0].value = "";
+
+            let message = {text, user: you};
+
+            //Rendering an outcome message
+            messageRenderer.renderMessage(chatMessagesSection, message, 'outcome');
+
+            //Emitting a message event in order to notify a socket on backend
+            socket.emit('message', message);
+        });
+
+        //Rendering a message from other users
+        socket.on('messageToAll', message => {
+            messageRenderer.renderMessage(chatMessagesSection, message, 'income');
         })
     });
 });

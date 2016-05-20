@@ -2,8 +2,7 @@
 @import '../styleguide';
 
 .page-chat{
-
-  overflow: hidden;
+  display: flex;
 
   &--title{
     .styleguide-title;
@@ -12,7 +11,7 @@
 
   &--left-panel{
     outline: 1px solid @text-quaternary;
-    width: 300px;
+    flex-grow: 1;
 
     &---profile{
       .styleguide-title;
@@ -44,7 +43,6 @@
       .styleguide-title;
       font-size: 20px;
       outline: 1px solid @text-quaternary;
-      overflow-y: scroll;
 
       &-user{
         display: flex;
@@ -69,5 +67,60 @@
 
   }
 
+  &--messages{
+    background: @background-tertiary;
+    flex-grow: 4;
+    outline: 1px solid @text-quaternary;
 
+
+    &-message{
+      &---income{
+        margin: 7px 0;
+        display: flex;
+        &-avatar{
+          height: 50px;
+          border-radius: 100%;
+          margin-left: 15px;
+        }
+
+        &-container{
+          display: flex;
+          flex-direction: column;
+          margin-left: 10px;
+
+          &-username{
+            color: @text-quaternary;
+            display: inline-block;
+            padding: 5px 0;
+          }
+
+          &-text{
+            color: @text-secondary;
+            font-size: 13px;
+            max-width: 300px;
+          }
+        }
+      }
+
+      &---outcome{
+        margin: 7px;
+        display: flex;
+        flex-direction: row-reverse;
+
+        &-text{
+          color: @text-secondary;
+          font-size: 13px;
+          padding: 10px;
+          background: @background-secondary;
+          max-width: 300px;
+          border-radius: 5px;
+        }
+      }
+
+    }
+  }
+
+  &--send-form{
+
+  }
 }

@@ -66,7 +66,15 @@ module.exports = (app, io) => {
 
             //Notifying all users (except the one who just logged in) from the chat the a new user joined
             socket.broadcast.emit('newUserJoinedChat', {user, other: users});
-        })
+        });
+
+
+        //Message
+        socket.on('message', message => {
+            console.log(message);
+            socket.broadcast.emit('messageToAll', message);
+        });
+
 
     });
 };

@@ -7,5 +7,10 @@ module.exports = {
         ],
         images: './client/src/assets/images/**/*.*',
         entry: './client/src/app.js'
+    },
+    watch: {
+        stylesheets: [
+            './client/src/assets/stylesheets/**/*.*'
+        ]
     }
 };
