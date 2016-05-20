@@ -2,9 +2,6 @@
    Client-side code!
  */
 
-//Creating a socket instance
-const socket = io();
-
 //Finding needed elements on the page
 const loginSection = document.querySelector('section.page-login');
 const loginForm    = loginSection.querySelector('.page-login--section-form form');
@@ -13,7 +10,7 @@ const sections     = Array.from(document.querySelectorAll('section'));
 
 function login(){
     return new Promise(resolve => {
-        loginForm.addEventListener('submit', (event) => {
+        loginForm.addEventListener('submit', event => {
 
             //Preventing a page from reload after submit
             event.preventDefault();
@@ -22,8 +19,6 @@ function login(){
                 username: event.target[0].value,
                 email:    event.target[1].value
             };
-
-            socket.emit('login', user);
 
             resolve(user);
         });
@@ -41,18 +36,28 @@ function render(sectionToRender){
     }
 }
 
-//TODO fix a bug with multiple connections and possible memory leaks
 //TODO add babel polyfill for latency
 
 window.addEventListener('load', () => {
+
     //First a login section is rendered
     render(loginSection);
 
-    //After login a chat section is rendered
-    login().then(user => render(chatSection, {withData: user}));
+    //Connecting via web-sockets
+    login().then( user => {
 
-    //listening to connections from new user
-    socket.on('newUser', (newUser) => {
-        console.log('New user just joined!', newUser);
-    })
+        //Creating a socket instance
+        const socket = io();
+
+        //Firing a login event and passing data to it
+        socket.emit('login', user);
+
+        //After login a chat section is rendered
+        render(chatSection, {withData: user});
+
+        //listening to connections from new user
+        socket.on('newUser', (newUser) => {
+            console.log('New user just joined!', newUser);
+        })
+    });
 });
