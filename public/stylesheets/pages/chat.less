@@ -1,0 +1,73 @@
+@import './../palette';
+@import './../styleguide';
+
+.page-chat{
+
+  overflow: hidden;
+
+  &--title{
+    .styleguide-title;
+    margin-bottom: 5px;
+  }
+
+  &--left-panel{
+    outline: 1px solid @text-quaternary;
+    width: 300px;
+
+    &---profile{
+      .styleguide-title;
+      font-size: 20px;
+      margin-bottom: 30px;
+
+      &-avatar{
+        width: 100px;
+        margin: 10px auto;
+
+        img{
+          max-width: 100%;
+          border-radius: 100%;
+        }
+      }
+
+      &-username{
+        color: @text-quaternary;
+        font-size: 25px;
+      }
+      &-email{
+        color: @text-secondary;
+        font-size: 15px;
+        margin-top: 10px;
+      }
+    }
+
+    &---users{
+      .styleguide-title;
+      font-size: 20px;
+      outline: 1px solid @text-quaternary;
+      overflow-y: scroll;
+
+      &-user{
+        display: flex;
+        align-items: center;
+        padding-left: 60px;
+        margin: 7px 0;
+
+        &:first-child{
+          margin-top: 20px;
+        }
+
+        &-avatar{
+          height: 50px;
+          border-radius: 100%;
+        }
+        &-username{
+          margin-left: 25px;
+        }
+      }
+    }
+
+
+  }
+
+
+}

@@ -27,6 +27,8 @@ module.exports = (app, io) => {
 
         let newUser = {};
 
+
+        //TODO remove user after disconnecting
         //Disconnecting
         socket.on('disconnect', () => console.log(`A user '${newUser.username}' was disconnected!`));
 
@@ -43,7 +45,14 @@ module.exports = (app, io) => {
                 value: user.username + Date.now()
             });
 
+            newUser.avatar = 'images/unnamed.jpg';
+
+            const chat = {you: newUser, other: Array.from(users)};
+
+            //Storing the user object
             users.add(newUser);
+
+            socket.emit('joinedChat', chat);
 
             //Notifying all users (except the one who just logged in) from the chat the a new user joined
             socket.broadcast.emit('newUser', newUser);
