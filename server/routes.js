@@ -1,5 +1,7 @@
 const users = [];
 
+const gravatar = require('gravatar');
+
 module.exports = (app, io) => {
 
     app.get('/', (request, response) => {
@@ -55,7 +57,7 @@ module.exports = (app, io) => {
                 value: user.username + Date.now()
             });
 
-            user.avatar = 'img/unnamed.jpg';
+            user.avatar =  gravatar.url(user.username, {s: '140', r: 'x', d: 'retro'});
 
             socket.emit('youJoinedChat', {user, other: users});
 
