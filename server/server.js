@@ -1,5 +1,4 @@
-const config = require('./config');
-
+const config = require('./server.config');
 const express = require('express');
 
 //TODO implement for all users not a single one
@@ -7,7 +6,6 @@ const express = require('express');
 //Initializing the app
 const app = express();
 config.init(app, express);
-
 
 const io = require('socket.io').listen(app.listen(config.port));
 console.log(`The app is running on port ${config.port}`);

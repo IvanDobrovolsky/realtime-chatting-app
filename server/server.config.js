@@ -1,7 +1,7 @@
 const lessMiddleware = require('less-middleware');
 const parserMiddleware = require('body-parser');
-
-const publicDirectory = __dirname + '/public';
+const path = require('path');
+const publicDirectory = path.resolve(__dirname, '../client/build');
 
 module.exports = {
     port: 4444,
@@ -11,7 +11,7 @@ module.exports = {
         app.set('view engine', 'jade');
 
         //Setting a directory for views
-        app.set('views', __dirname + '/views');
+        app.set('views', path.resolve(__dirname, '../views'));
 
         //Configuring less middleware
         app.use(lessMiddleware(publicDirectory), []);
