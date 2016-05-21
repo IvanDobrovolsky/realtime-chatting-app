@@ -5,7 +5,7 @@
 
 ## Getting started:
   - Install Node.js(npm comes with it by default) - https://nodejs.org/en/
-  - Install gulp ` npm install gulp `
+  - Install gulp ` npm install -g gulp `
   - ` git clone https://github.com/IvanDobrovolsky/realtime-chatting-app.git `
   - ` npm install `
   - ` npm start `
