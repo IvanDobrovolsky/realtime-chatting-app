@@ -3,6 +3,7 @@
 
 .page-chat{
   display: flex;
+  max-height: 900px;
 
   &--title{
     .styleguide-title;
@@ -12,6 +13,7 @@
   &--left-panel{
     outline: 1px solid @text-quaternary;
     flex-grow: 1;
+    height: 550px;
 
     &---profile{
       .styleguide-title;
@@ -43,6 +45,7 @@
       .styleguide-title;
       font-size: 20px;
       outline: 1px solid @text-quaternary;
+      overflow-y: scroll;
 
       &-user{
         display: flex;
@@ -71,12 +74,17 @@
     background: @background-tertiary;
     flex-grow: 4;
     outline: 1px solid @text-quaternary;
+    position: relative;
+    height: 550px;
+    overflow-y: scroll;
 
 
     &-message{
+
       &---income{
         margin: 7px 0;
         display: flex;
+
         &-avatar{
           height: 50px;
           border-radius: 100%;
@@ -116,11 +124,26 @@
           border-radius: 5px;
         }
       }
-
     }
   }
 
   &--send-form{
+    width: 100%;
 
+    form{
+      display: flex;
+      margin: 0;
+    }
+
+    &-text{
+      flex-basis: 85%;
+      vertical-align: baseline;
+    }
+    &-submit{
+      .styleguide-cta;
+      flex-basis: 15%;
+      border: none;
+      cursor: pointer;
+    }
   }
 }

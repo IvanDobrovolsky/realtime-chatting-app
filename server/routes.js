@@ -71,7 +71,7 @@ module.exports = (app, io) => {
 
         //Message
         socket.on('message', message => {
-            console.log(message);
+
             socket.broadcast.emit('messageToAll', message);
         });
 
