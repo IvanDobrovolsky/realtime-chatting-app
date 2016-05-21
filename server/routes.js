@@ -8,11 +8,6 @@ module.exports = (app, io) => {
         response.render('home', {title: 'Node.js + Socket.io realtime webchat'});
     });
 
-    app.get('/invite', (request, response) => {
-        //TODO Link is hardcoded for now(Add a real one!)
-        response.render('invitation', {link: 'localhost:4444'})
-    });
-
     app.get('/chat', (request, response) => {
         response.render('chat', {avatar: "img/unnamed.jpg"});
     });
@@ -29,19 +24,6 @@ module.exports = (app, io) => {
 
         let user = {};
 
-
-        //TODO remove user after disconnecting
-        //Disconnecting
-        socket.on('disconnect', () => {
-            //Notifying that a user was disconnected
-            console.log(`A user '${user.username}' was disconnected!`);
-
-            //Removing a user object from the store
-            users.splice(users.findIndex(u => u.id === user.id), 1);
-
-            //Broadcasting an event and notifying other users about it
-            socket.broadcast.emit('userLeftChat', {user, other: users});
-        });
 
         //Login
         socket.on('login', newUser => {
@@ -71,10 +53,20 @@ module.exports = (app, io) => {
 
         //Message
         socket.on('message', message => {
-
             socket.broadcast.emit('messageToAll', message);
         });
 
 
+        //Disconnecting
+        socket.on('disconnect', () => {
+            //Notifying that a user was disconnected
+            console.log(`A user '${user.username}' was disconnected!`);
+
+            //Removing a user object from the store
+            users.splice(users.findIndex(u => u.id === user.id), 1);
+
+            //Broadcasting an event and notifying other users about it
+            socket.broadcast.emit('userLeftChat', {user, other: users});
+        });
     });
 };
