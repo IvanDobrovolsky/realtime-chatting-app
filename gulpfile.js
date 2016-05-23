@@ -13,7 +13,6 @@ const watchify = require('watchify');                   //Listens to update even
 const source = require('vinyl-source-stream');          //Uses conventional text streams with gulp, gives streaming vinyl file object //Notifies about changes
 const buffer = require('gulp-buffer');                  //Converts from streaming to buffered vinyl file object
 
-const browserSync = require('browser-sync');              //Browser synchronization
 const nodemon = require('gulp-nodemon');
 
 
